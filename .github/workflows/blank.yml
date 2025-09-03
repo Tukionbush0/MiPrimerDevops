@@ -1,0 +1,32 @@
+name: Markdown Lint Validation
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push events for main branch
+  push:
+    branches: [ "main" ]
+  # Triggers the workflow on pull request events for main branch
+  pull_request:
+    branches: [ "main" ]
+  # Allows manual execution from Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs
+jobs:
+  lint-markdown:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks to execute
+    steps:
+      # Checks-out your repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Runs markdownlint-cli2 validation
+      - name: Validate Markdown files
+        uses: DavidAnson/markdownlint-cli2-action@v20
+        with:
+          config: .markdownlint.json
+          # This will make the pipeline fail if any errors are found
+          # The action automatically fails on linting errors
